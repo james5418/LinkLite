@@ -1,9 +1,21 @@
 import { Router, Request, Response } from 'express';
+import UrlSchema from '../models/url';
+import { client as redisClient } from '../databases/redis';
 
 
-export const shorten_router = Router();
+export const shortenRouter = Router();
 
-shorten_router.post('/', async(req: Request, res: Response): Promise<void> => {
+shortenRouter.post('/', async(req: Request, res: Response): Promise<void> => {
 
-    res.send('shorten_route');
+    const now = new Date();
+
+    const newUrl = new UrlSchema({
+        longUrl: "https://example.com",
+        shortUrl: "xyz",
+        expiredAt: now,
+    });
+
+    const saveUrl = await newUrl.save();
+    res.status(200).json(saveUrl);
+
 });

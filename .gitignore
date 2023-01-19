@@ -102,3 +102,6 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Redis binary dump (dump.rdb) files
+*.rdb
