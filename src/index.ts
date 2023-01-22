@@ -28,8 +28,8 @@ else if(process.env.NODE_ENV === 'production'){
 }
 
 app.use("/api/shorten", shortenRouter);
-app.use("/", redirectRouter);
 app.use("/api/check", checkRouter);
+app.use("/", redirectRouter);
 
 app.listen(app.get("port"), () => {
     console.log(`Server is running on port ${app.get("port")}`);

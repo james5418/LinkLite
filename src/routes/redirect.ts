@@ -1,9 +1,25 @@
 import { Router, Request, Response } from 'express';
+import UrlSchema from '../models/Url';
+import { client as redisClient } from '../databases/redis';
+import { isExpired } from '../utils/dateHandler';
 
 
 export const redirectRouter = Router();
 
 redirectRouter.get('/:id', async(req: Request, res: Response): Promise<void> => {
 
-    res.send(`redirect_route: ${req.params.id}`);
+    const urlId = req.params.id;
+    const urlRecord = await UrlSchema.findOne({ shortUrl : urlId });
+
+    if(urlRecord && !isExpired(urlRecord.expiredAt)){
+        res.redirect(urlRecord.longUrl);
+    }
+    else if(urlRecord && isExpired(urlRecord.expiredAt)){
+        await UrlSchema.deleteOne({ shortUrl : urlId });
+        res.status(404).send(`This URL is expired.`);
+    }
+    else{
+        res.status(404).send(`${urlId} not found`);
+    }
+
 });
