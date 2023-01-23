@@ -10,11 +10,12 @@ export const shortenRouter = Router();
 
 shortenRouter.post('/', async(req: Request, res: Response): Promise<void> => {
 
-    const url: string  = removeTrailingSlash(req.body.url);
-
-    if(!isValidUrl(url)){
+    if(!isValidUrl(req.body.url)){
         res.status(400).send("Invalid URL!");
+        return;
     }
+
+    const url: string  = removeTrailingSlash(req.body.url);
 
     const urlRecord = await UrlSchema.findOne({ longUrl : url });
 
