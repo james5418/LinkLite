@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 export interface IUrl {
     longUrl: string;
     shortUrl: string;
-    expiredAt: Date;
+    expireAt: Date;
 }
 
 const UrlSchema = new mongoose.Schema<IUrl>({
@@ -15,7 +15,7 @@ const UrlSchema = new mongoose.Schema<IUrl>({
         type: String,
         required: true,
     },
-    expiredAt: {
+    expireAt: {
         type: Date,
         required: true,
     },

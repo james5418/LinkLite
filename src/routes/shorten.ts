@@ -20,14 +20,14 @@ shortenRouter.post('/', async(req: Request, res: Response): Promise<void> => {
     const urlRecord = await UrlSchema.findOne({ longUrl : url });
 
     if(urlRecord){
-        urlRecord.expiredAt = newExpiredDate();
+        urlRecord.expireAt = newExpiredDate();
         const saveUrl = await urlRecord.save();
 
         // cache
 
         const output: IShortenResult = {
             shortUrl: `${process.env.HOST}/${saveUrl.shortUrl}`,
-            expiredAt: saveUrl.expiredAt,
+            expireAt: saveUrl.expireAt,
         }
         res.status(200).json(output);
     }
@@ -35,7 +35,7 @@ shortenRouter.post('/', async(req: Request, res: Response): Promise<void> => {
         const newUrl = new UrlSchema({
             longUrl: url,
             shortUrl: nanoid(10),
-            expiredAt: newExpiredDate(),
+            expireAt: newExpiredDate(),
         });
         const saveUrl = await newUrl.save();
 
@@ -43,7 +43,7 @@ shortenRouter.post('/', async(req: Request, res: Response): Promise<void> => {
 
         const output: IShortenResult = {
             shortUrl: `${process.env.HOST}/${saveUrl.shortUrl}`,
-            expiredAt: saveUrl.expiredAt,
+            expireAt: saveUrl.expireAt,
         }
         res.status(200).json(output);
     }

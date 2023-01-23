@@ -13,7 +13,7 @@ checkRouter.get('/:id', async(req: Request, res: Response): Promise<void> => {
         const result: IUrl = {
             longUrl: urlRecord.longUrl,
             shortUrl: `${process.env.HOST}/${urlRecord.shortUrl}`,
-            expiredAt: urlRecord.expiredAt,
+            expireAt: urlRecord.expireAt,
         } 
         res.status(200).json(result);
     }
