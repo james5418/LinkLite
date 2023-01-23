@@ -1,6 +1,7 @@
 import { Router, Request, Response } from 'express';
 import { nanoid } from 'nanoid';
 import UrlSchema from '../models/Url';
+import { IShortenResult } from '../models/ShortenResult';
 import { client as redisClient } from '../databases/redis';
 import isValidUrl from '../utils/validUrl';
 import { newExpiredDate } from '../utils/dateHandler';
@@ -24,7 +25,10 @@ shortenRouter.post('/', async(req: Request, res: Response): Promise<void> => {
 
         // cache
 
-        const { _id, ...output } = saveUrl.toObject({ versionKey: false });
+        const output: IShortenResult = {
+            shortUrl: `${process.env.HOST}/${saveUrl.shortUrl}`,
+            expiredAt: saveUrl.expiredAt,
+        }
         res.status(200).json(output);
     }
     else{
@@ -37,7 +41,10 @@ shortenRouter.post('/', async(req: Request, res: Response): Promise<void> => {
 
         // cache
 
-        const { _id, ...output } = saveUrl.toObject({ versionKey: false });
+        const output: IShortenResult = {
+            shortUrl: `${process.env.HOST}/${saveUrl.shortUrl}`,
+            expiredAt: saveUrl.expiredAt,
+        }
         res.status(200).json(output);
     }
 
