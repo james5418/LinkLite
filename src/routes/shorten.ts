@@ -3,15 +3,14 @@ import { nanoid } from 'nanoid';
 import UrlSchema from '../models/Url';
 import { IShortenResult } from '../models/ShortenResult';
 import { client as redisClient } from '../databases/redis';
-import isValidUrl from '../utils/validUrl';
 import { newExpiredDate } from '../utils/dateHandler';
-
+import { isValidUrl, removeTrailingSlash } from '../utils/urlHandler';
 
 export const shortenRouter = Router();
 
 shortenRouter.post('/', async(req: Request, res: Response): Promise<void> => {
 
-    const url: string  = req.body.url;
+    const url: string  = removeTrailingSlash(req.body.url);
 
     if(!isValidUrl(url)){
         res.status(400).send("Invalid URL!");
