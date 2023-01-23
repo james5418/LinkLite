@@ -24,7 +24,8 @@ shortenRouter.post('/', async(req: Request, res: Response): Promise<void> => {
 
         // cache
 
-        res.status(200).json(saveUrl)
+        const { _id, ...output } = saveUrl.toObject({ versionKey: false });
+        res.status(200).json(output);
     }
     else{
         const newUrl = new UrlSchema({
@@ -36,7 +37,8 @@ shortenRouter.post('/', async(req: Request, res: Response): Promise<void> => {
 
         // cache
 
-        res.status(200).json(saveUrl);
+        const { _id, ...output } = saveUrl.toObject({ versionKey: false });
+        res.status(200).json(output);
     }
 
 });
