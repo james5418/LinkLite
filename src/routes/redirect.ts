@@ -15,7 +15,10 @@ redirectRouter.get('/:id', async(req: Request, res: Response): Promise<void> => 
     if(Object.keys(cacheData).length !== 0){
         const expireAt = new Date(cacheData.expireAt);
         
-        if(!isExpired(expireAt)){
+        if(cacheData.longUrl === ""){
+            res.status(404).send(`${urlId} not found`);
+        }
+        else if(!isExpired(expireAt)){
             res.redirect(cacheData.longUrl);
         }
         else{
@@ -39,6 +42,10 @@ redirectRouter.get('/:id', async(req: Request, res: Response): Promise<void> => 
             res.status(404).send(`This URL is expired.`);
         }
         else{
+            await redisClient.hSet(urlId, [
+                'longUrl', '',
+                'expireAt', '',
+            ]);
             res.status(404).send(`${urlId} not found`);
         }
     }
