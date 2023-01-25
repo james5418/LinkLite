@@ -23,13 +23,11 @@ shortenRouter.post('/', async(req: Request, res: Response): Promise<void> => {
         urlRecord.expireAt = newExpiredDate();
         const saveUrl = await urlRecord.save();
 
-        // cache
-
-        const output: IShortenResult = {
+        const result: IShortenResult = {
             shortUrl: `${process.env.HOST}/${saveUrl.shortUrl}`,
             expireAt: saveUrl.expireAt,
         }
-        res.status(200).json(output);
+        res.status(200).json(result);
     }
     else{
         const newUrl = new UrlSchema({
@@ -39,13 +37,11 @@ shortenRouter.post('/', async(req: Request, res: Response): Promise<void> => {
         });
         const saveUrl = await newUrl.save();
 
-        // cache
-
-        const output: IShortenResult = {
+        const result: IShortenResult = {
             shortUrl: `${process.env.HOST}/${saveUrl.shortUrl}`,
             expireAt: saveUrl.expireAt,
         }
-        res.status(200).json(output);
+        res.status(200).json(result);
     }
 
 });
