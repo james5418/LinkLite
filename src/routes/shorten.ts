@@ -32,7 +32,7 @@ shortenRouter.post('/', async(req: Request, res: Response): Promise<void> => {
     else{
         const newUrl = new UrlSchema({
             longUrl: url,
-            shortUrl: nanoid(10),
+            shortUrl: nanoid(5),
             expireAt: newExpiredDate(),
         });
         const saveUrl = await newUrl.save();
