@@ -29,4 +29,4 @@ jobs:
       - name: Jest
         run: |
           npm ci
-          npm test-cover
+          npm run test-cover
