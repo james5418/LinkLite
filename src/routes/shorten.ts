@@ -2,7 +2,6 @@ import { Router, Request, Response } from 'express';
 import { nanoid } from 'nanoid';
 import UrlSchema from '../models/Url';
 import { IShortenResult } from '../models/ShortenResult';
-import { client as redisClient } from '../databases/redis';
 import { newExpiredDate } from '../utils/dateHandler';
 import { isValidUrl, removeTrailingSlash } from '../utils/urlHandler';
 
