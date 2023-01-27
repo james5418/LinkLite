@@ -22,8 +22,8 @@ afterAll(async () => {
     await UrlSchema.deleteOne({ shortUrl : urlId });
     await redisClient.sendCommand(["del", urlId]);
 
-    mongoose.connection.close();
     await redisClient.quit();
+    mongoose.connection.close();
     server.close();
 });
 
