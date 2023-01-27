@@ -6,12 +6,6 @@ on:
     paths-ignore:
         - 'README.md'
 
-env:
-  PORT: ${{ secrets.PORT }}
-  HOST: ${{ secrets.HOST }}
-  MONGODB_URI: ${{ secrets.MONGODB_URI }}
-  REDIS_URL: ${{ secrets.REDIS_URL }}
-
 jobs:
   unit_test:
     runs-on: ubuntu-latest
@@ -25,8 +19,13 @@ jobs:
       - name: Start Redis
         uses: supercharge/redis-github-action@1.4.0
         with:
-          redis-version: 4
+          redis-version: 7
       - name: Jest
         run: |
           npm ci
           npm run test-cover
+        env:
+          PORT: ${{ secrets.PORT }}
+          HOST: ${{ secrets.HOST }}
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          REDIS_URL: ${{ secrets.REDIS_URL }}
