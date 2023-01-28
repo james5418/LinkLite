@@ -1,6 +1,5 @@
 import request from 'supertest';
 import mongoose from 'mongoose';
-import { nanoid } from 'nanoid';
 import app from "../src/app";
 import UrlSchema from '../src/models/Url';
 import { client as redisClient } from '../src/databases/redis';
