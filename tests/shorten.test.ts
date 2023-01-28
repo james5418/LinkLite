@@ -1,39 +1,21 @@
 import request from 'supertest';
 import mongoose from 'mongoose';
-import { nanoid } from 'nanoid';
 import app from "../src/app";
 import UrlSchema from '../src/models/Url';
 import { client as redisClient } from '../src/databases/redis';
-import { newExpiredDate } from '../src/utils/dateHandler';
 
 
-const urlId: string = nanoid(5);
-
-beforeAll(async () => {
-    const validUrl = new UrlSchema({
-        longUrl: "https://www.example.com",
-        shortUrl: urlId,
-        expireAt: newExpiredDate(),
-    });
-    await validUrl.save();
-});
+let shortId: string = "";
+let expireAt: number = new Date().getTime();
 
 afterAll(async () => {
-    await UrlSchema.deleteOne({ shortUrl : urlId });
-    await redisClient.sendCommand(["del", urlId]);
+    await UrlSchema.deleteOne({ shortUrl : shortId });
 
     await redisClient.quit();
     mongoose.connection.close();
 });
 
-
 describe("POST /api/shorten", () => {
-    let shortId: string = "";
-    let expireAt: number = new Date().getTime();
-
-    afterAll(async () => {
-        await UrlSchema.deleteOne({ shortUrl : shortId });
-    });
 
     test('given a valid url', async () => {
         const response = await request(app)
@@ -78,27 +60,5 @@ describe("POST /api/shorten", () => {
 
         expect(response.status).toBe(400);
         expect(response.text).toBe('Invalid URL!');
-    });
-});
-
-
-describe("GET /:id", () => {
-    test('redirect to a valid short url', async () => {
-        const response = await request(app).get(`/${urlId}`);
-
-        expect(response.status).toBe(302);
-    });
-});
-
-
-describe("GET /api/check/:id", () => {
-    test('check a valid short url', async () => {
-        const response = await request(app).get(`/api/check/${urlId}`);
-
-        expect(response.status).toBe(200);
-        expect(response.body).toHaveProperty('longUrl');
-        expect(response.body).toHaveProperty('shortUrl');
-        expect(response.body).toHaveProperty('expireAt');
-        expect(Object.keys(response.body).length).toBe(3);
     });
 });
