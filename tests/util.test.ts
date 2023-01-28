@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { isExpired, newExpiredDate } from '../src/utils/dateHandler';
 import { isValidUrl, removeTrailingSlash } from '../src/utils/urlHandler';
 
@@ -17,10 +18,10 @@ describe("isExpired()", () => {
 
 
 describe("newExpiredDate()", () => {
-    test("returns a date one month in the future", () => {
-        const now = new Date();
-        const futureDate = newExpiredDate();
-        expect(futureDate.getMonth()).toBe(now.getMonth() + 1);
+    test("returns a date 30 days in the future", () => {
+        const now = dayjs();
+        const futureDate = dayjs(newExpiredDate());
+        expect(futureDate.diff(now, 'day')).toBe(30);
     });
 });
 
