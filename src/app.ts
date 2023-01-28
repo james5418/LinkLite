@@ -31,8 +31,4 @@ app.use("/api/shorten", shortenRouter);
 app.use("/api/check", checkRouter);
 app.use("/", redirectRouter);
 
-const server = app.listen(app.get("port"), () => {
-    console.log(`Server is running on port ${app.get("port")}`);
-});
-
-export default server;
+export default app;

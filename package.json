@@ -2,11 +2,11 @@
   "name": "linklite",
   "version": "1.0.0",
   "description": "Yet Another URL Shortening Service",
-  "main": "dist/index.js",
+  "main": "dist/server.js",
   "scripts": {
     "build": "tsc",
-    "start": "NODE_ENV=production node dist/index.js",
-    "dev": "NODE_ENV=dev nodemon src/index.ts",
+    "start": "NODE_ENV=production node dist/server.js",
+    "dev": "NODE_ENV=dev nodemon src/server.ts",
     "test": "NODE_ENV=test jest",
     "test-cover": "NODE_ENV=test jest --verbose --coverage"
   },
