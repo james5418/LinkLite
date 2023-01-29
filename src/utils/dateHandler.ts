@@ -7,6 +7,6 @@ export const isExpired = (date: Date): boolean => {
 
 export const newExpiredDate = (): Date => {
     const now = dayjs();
-    const newDate = now.add(30, 'day');
+    const newDate = now.add(180, 'day');
     return newDate.toDate();
 }

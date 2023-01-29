@@ -18,10 +18,10 @@ describe("isExpired()", () => {
 
 
 describe("newExpiredDate()", () => {
-    test("returns a date 30 days in the future", () => {
+    test("returns a date 180 days in the future", () => {
         const now = dayjs();
         const futureDate = dayjs(newExpiredDate());
-        expect(futureDate.diff(now, 'day')).toBe(30);
+        expect(futureDate.diff(now, 'day')).toBe(180);
     });
 });
 
