@@ -10,8 +10,8 @@ describe("isExpired()", () => {
     });
 
     test("date in the future", () => {
-        const futureDate = new Date();
-        futureDate.setDate(futureDate.getDate() + 1)
+        const now = dayjs();
+        const futureDate = now.add(1, 'day').toDate();
         expect(isExpired(futureDate)).toBe(false);
     });
 });
