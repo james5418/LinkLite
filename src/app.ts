@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import helmet from 'helmet';
@@ -26,6 +26,10 @@ if(process.env.NODE_ENV === 'dev'){
 else if(process.env.NODE_ENV === 'production'){
     app.use(morgan('common')); 
 }
+
+app.get('/health-check', (req: Request, res: Response) => {
+    res.status(200).send('ok');
+});
 
 app.use("/api/shorten", shortenRouter);
 app.use("/api/check", checkRouter);
