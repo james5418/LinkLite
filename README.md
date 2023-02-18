@@ -56,7 +56,7 @@ curl -L -X GET https://linklite.onrender.com/<short_url_id>
 
 
 ## Installation and Setup
-To run this application, your can follow the steps below:
+To run this application, you can follow the steps below:
 
 ```
 git clone https://github.com/james5418/LinkLite.git
