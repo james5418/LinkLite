@@ -1,4 +1,5 @@
 import { Router, Request, Response } from 'express';
+import { config } from '../config';
 import UrlSchema, { IUrl } from '../models/Url';
 import { client as redisClient } from '../databases/redis';
 import { isExpired } from '../utils/dateHandler';
@@ -21,7 +22,7 @@ checkRouter.get('/:id', async(req: Request, res: Response): Promise<void> => {
         else if(!isExpired(expireAt)){
             const result: IUrl = {
                 longUrl: cacheData.longUrl,
-                shortUrl: `${process.env.HOST}/${urlId}`,
+                shortUrl: `${config.HOST}/${urlId}`,
                 expireAt: expireAt,
             } 
             res.status(200).json(result);
@@ -43,7 +44,7 @@ checkRouter.get('/:id', async(req: Request, res: Response): Promise<void> => {
 
             const result: IUrl = {
                 longUrl: urlRecord.longUrl,
-                shortUrl: `${process.env.HOST}/${urlRecord.shortUrl}`,
+                shortUrl: `${config.HOST}/${urlRecord.shortUrl}`,
                 expireAt: urlRecord.expireAt,
             } 
             res.status(200).json(result);

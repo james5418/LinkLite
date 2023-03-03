@@ -1,5 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { nanoid } from 'nanoid';
+import { config } from '../config';
 import UrlSchema from '../models/Url';
 import { IShortenResult } from '../models/ShortenResult';
 import { newExpiredDate } from '../utils/dateHandler';
@@ -23,7 +24,7 @@ shortenRouter.post('/', async(req: Request, res: Response): Promise<void> => {
         const saveUrl = await urlRecord.save();
 
         const result: IShortenResult = {
-            shortUrl: `${process.env.HOST}/${saveUrl.shortUrl}`,
+            shortUrl: `${config.HOST}/${saveUrl.shortUrl}`,
             expireAt: saveUrl.expireAt,
         }
         res.status(200).json(result);
@@ -37,7 +38,7 @@ shortenRouter.post('/', async(req: Request, res: Response): Promise<void> => {
         const saveUrl = await newUrl.save();
 
         const result: IShortenResult = {
-            shortUrl: `${process.env.HOST}/${saveUrl.shortUrl}`,
+            shortUrl: `${config.HOST}/${saveUrl.shortUrl}`,
             expireAt: saveUrl.expireAt,
         }
         res.status(200).json(result);
