@@ -16,8 +16,6 @@ services:
         container_name: server
         ports:
             - 8000:8000
-        volumes:
-            - .:/app
         environment:
             - PORT=8000
             - HOST=http://localhost
