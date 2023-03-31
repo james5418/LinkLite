@@ -59,7 +59,7 @@ curl -L -X GET https://linklite.onrender.com/<short_url_id>
 To run this application, you can follow the steps below:
 
 ```
-git clone https://github.com/james5418/LinkLite.git
+git clone git@github.com:james5418/LinkLite.git
 ```
 ```
 cd LinkLite
@@ -86,5 +86,5 @@ npm start
 ```
 docker-compose up -d --build
 ```
-The API will be available at `http://localhost`.
+The API will be available at `http://localhost` (port 80).
 
